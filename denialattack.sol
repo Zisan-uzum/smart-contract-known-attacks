@@ -19,7 +19,10 @@ contract victim{
     function changeking() public payable{ // should be payable takes eth to change king
         require(msg.value > money, "fee is not enough to change king");
         (bool success, ) = king.call{value: money}("");
-        require(success, "eth couldnt been sent to old king");
+        //require(success, "eth couldnt been sent to old king");
+        if(!success){
+            revert("it is reverted");
+        }
         king = msg.sender;
         money = msg.value;
     }
